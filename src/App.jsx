@@ -6,15 +6,33 @@ import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 
 function App() {
-  const [count, setCount] = useState(0);
+  // const todos = [
+  //   { input: "Hello! Add your first todo!", complete: true },
+  //   { input: "Get the groceries!", complete: false },
+  //   { input: "Learn how to web design", complete: false },
+  //   { input: "Say hi to gran gran", complete: true },
+  // ];
+  const [todos, setTodos] = useState([]);
+  const [selectedTab, setSelectedTab] = useState("Open");
+
+  function handleAddTodo(newTodo) {
+    const newTodoList = [...todos, { input: newTodo, complete: false }];
+    setTodos(newTodoList);
+  }
+  function handleEditTodo() {}
+  function handleDeleteTodo() {}
 
   return (
     <>
       <>
-        <Header />
-        <Tabs />
-        <TodoList />
-        <TodoInput />
+        <Header todos={todos} />
+        <Tabs
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+          todos={todos}
+        />
+        <TodoList todos={todos} />
+        <TodoInput handleAddTodo={handleAddTodo} />
       </>
     </>
   );
