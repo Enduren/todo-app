@@ -2,19 +2,29 @@ import React from "react";
 import TodoCard from "./TodoCard";
 
 const TodoList = (props) => {
-  const { todos } = props;
-  const tab = "All";
+  const { todos, selectedTab } = props;
+
   const filterTodosList =
-    tab === "All"
+    selectedTab === "All"
       ? todos
-      : tab === "Completed"
+      : selectedTab === "Completed"
       ? todos.filter((val) => val.complete)
       : todos.filter((val) => !val.complete);
 
   return (
     <>
       {filterTodosList.map((todo, todoIndex) => {
-        return <TodoCard key={todoIndex} todo={todo} />;
+        const tempTodoIndex = todos.findIndex((val) => val.input == todo.input);
+        console.log(tempTodoIndex);
+        // finding an index like this has it's limitations and in later courses we learn a more sophisticated way of doing it (the limitation is that the code might misbehave if you have two todos with the exact same text :) See if you can figure out why!)
+        return (
+          <TodoCard
+            key={todoIndex}
+            {...props}
+            todoIndex={tempTodoIndex}
+            todo={todo}
+          />
+        );
       })}
     </>
   );
